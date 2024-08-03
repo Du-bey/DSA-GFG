@@ -30,27 +30,29 @@ class GFG{
 // } Driver Code Ends
 
 
+
+
 //User function Template for Java
 
 class Solution{
     static int knapSack(int n, int w, int val[], int wt[])
     {
         // code here
-        int[][] dp = new int[n][w+1];
+        int[] prev = new int[w+1];
         for(int i = 0;i<=w;i++){
-            dp[0][i] = (int) i/wt[0] * val[0];
+            prev[i] = (int) i/wt[0] * val[0];
         }
         
         for(int i =1;i<n;i++){
             for(int t =0; t<=w;t++){
-                int notTake = dp[i-1][t];
+                int notTake = prev[t];
                 int take = Integer.MIN_VALUE;
                 if(wt[i] <= t){
-                    take = val[i] + dp[i][t-wt[i]];
+                    take = val[i] + prev[t-wt[i]];
                 }
-                dp[i][t] = Math.max(take, notTake);
+                prev[t] = Math.max(take, notTake);
             }
         }
-        return dp[n-1][w];
+        return prev[w];
     }
 }
