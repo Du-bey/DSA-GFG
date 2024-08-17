@@ -57,41 +57,31 @@ class Node{
 class Solution {
     public Node addOne(Node head) {
         // code here.
-        if(head == null) return new Node(1);
-        Node rev = rev(head);
-        Node temp = rev;
-        int c = 1;
-        while(temp.next != null){
-            int val = temp.data + c;
-            c = val /10;
-            val = val % 10;
-            temp.data = val;
-            temp = temp.next;
+        int carry = 1;
+        carry = helper(head);
+        if(carry == 1){
+            Node temp = new Node(1);
+            temp.next = head;
+            return temp;
         }
-        if(c == 1){
-            Node temp2 = new Node(1);
-            int val = temp.data + c;
-            if(val > 9){
-                val = val % 10;
-                temp.data = val;
-                temp.next = temp2;
-            }
-            else{
-                temp.data = val;
-            }
-            
-        }
-        return rev(rev);
+        return head;
     }
     
-    public Node rev(Node head) {
-        Node prev = null;
-        while(head != null){
-            Node forw = head.next;
-            head.next = prev;
-            prev = head;
-            head = forw;
+    public int helper(Node head){
+        if(head == null) return 1;
+        int car = helper(head.next);
+        head.data = head.data + car;
+        if(head.data == 10){
+            head.data = 0;
+            return 1;
         }
-        return prev;
+        return 0;
     }
+    
+    
+    
+    
+    
+    
+    
 }
