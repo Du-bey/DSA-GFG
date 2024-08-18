@@ -14,50 +14,39 @@ class Node {
 
 
 // } Driver Code Ends
-// User function Template for Java
 
-/*
-class Node
-{
-    int data;
-    Node next;
-    Node(int data)
-    {
-        this.data = data;
-        next = null;
-    }
-}
-*/
+
+
 class Solution {
-    // Function to sort a linked list of 0s, 1s and 2s.
     static Node segregate(Node head) {
-        // add your code here
-        int z =0, o =0, t =0;
+        Node z = new Node(-1);
+        Node o = new Node(-1);
+        Node t = new Node(-1);
         Node temp = head;
+        Node d0 = z;
+        Node d1 = o;
+        Node d2 = t;
         while(temp != null){
-            int d = temp.data;
-            if(d == 0) z++;
-            if(d == 1) o++;
-            if(d == 2) t++;
-            temp = temp.next;
-        }
-        temp = head;
-        while(temp != null){
-            if(z > 0){
-                temp.data = 0;
-                z--;
+            int data = temp.data;
+            if(data == 0){
+                z.next = temp;
+                z = temp;
             }
-            else if(o > 0){
-                temp.data = 1;
-                o--;
+            else if(data == 1){
+                o.next = temp;
+                o = temp;
             }
-            else {
-                temp.data = 2;
-                t--;
+            else{
+                t.next = temp;
+                t = temp;
             }
             temp = temp.next;
         }
-        return head;
+        z.next = d1.next != null ? d1.next : d2.next;
+        o.next = d2.next;
+        t.next = null;
+        
+        return d0.next;
     }
 }
 
