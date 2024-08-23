@@ -33,7 +33,7 @@ class Solution
     {
         // code here
         List<Integer> l = new ArrayList<>();
-        for(int i =2;i<=n;i++){
+        for(int i =2;i<=Math.sqrt(n);i++){
             if(n % i == 0){
                 l.add(i);
                 while(n % i == 0){
@@ -41,6 +41,8 @@ class Solution
                 }
             }
         }
+        
+        if(n != 1) l.add(n);
         int s = l.size();
         int[] ans = new int[s];
         for (int i = 0; i < s; i++) {
