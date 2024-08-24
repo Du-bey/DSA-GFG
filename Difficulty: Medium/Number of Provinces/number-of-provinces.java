@@ -34,7 +34,7 @@ class GFG {
 class Solution {
     static int numProvinces(ArrayList<ArrayList<Integer>> adj, int V) {
         // code here
-        ArrayList<ArrayList<Integer>> adjLs = new ArrayList<ArrayList<Integer>>(); 
+        ArrayList<ArrayList<Integer>> adjLs = new ArrayList<>();
         for(int i = 0;i<V;i++) {
             adjLs.add(new ArrayList<Integer>()); 
         }
@@ -47,9 +47,8 @@ class Solution {
                 }
             }
         }
-        
-        int cnt = 0;
         boolean[] vis = new boolean[V];
+        int cnt = 0;
         for(int i =0;i<V;i++){
             if(!vis[i]){
                 dfs(i, adjLs, vis);
@@ -58,13 +57,22 @@ class Solution {
         }
         return cnt;
     }
-
+    
     public static void dfs(int u, ArrayList<ArrayList<Integer>> adj, boolean[] vis){
         vis[u] = true;
-        for(int edge : adj.get(u)){
-            if(!vis[edge]){
-                dfs(edge, adj, vis);
+        for(int v : adj.get(u)){
+            if(!vis[v]){
+                dfs(v, adj, vis);
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 };
