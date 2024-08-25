@@ -76,69 +76,52 @@ class GFG {
 // } Driver Code Ends
 
 
+// User function Template for Java
 
-
-//User function Template for Java
-
-class Solution
-{
-    public String findOrder(String [] dict, int N, int K)
-    {
+class Solution {
+    public String findOrder(String[] dict, int n, int k) {
         // Write your code here
-
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for(int i=0;i<K;i++){
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i =0;i<k;i++){
             adj.add(new ArrayList<>());
         }
-        for(int i =0;i<N-1;i++){
-            String s1 = dict[i];
-            String s2 = dict[i+1];
-
-            int len = Math.min(s1.length(), s2.length());
-            for(int ptr = 0; ptr < len; ptr++){
-                if(s1.charAt(ptr) != s2.charAt(ptr)){
-                    adj.get(s1.charAt(ptr)- 'a').add(s2.charAt(ptr)- 'a');
+        int[] indegree = new int[k];
+        for(int i =0;i<n-1;i++){
+            String s = dict[i];
+            String t = dict[i+1];
+            int len = Math.min(s.length(), t.length());
+            for(int ind = 0;ind < len;ind++){
+                char cs = s.charAt(ind);
+                char ct = t.charAt(ind);
+                if(cs != ct){
+                    adj.get(cs - 'a').add(ct - 'a');
+                    indegree[ct - 'a']++;
                     break;
                 }
             }
         }
-        int [] ans = topoSort(K , adj);
-        String s = "";
-        for(int i =0;i<K;i++){
-            s += (char) (ans[i] + (int) 'a');
-        }
-        return s;
-
-    }
-    
-    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
-    {
-        int[] inDegree = new int[V];
-        int[] ans = new int[V];
-        int inDegreeIndex =0;
-        for (int u = 0; u < V; u++) {
-            for (int x:adj.get(u))
-                inDegree[x]++;
-        }
+        
         Queue<Integer> q = new LinkedList<>();
-        for(int i = 0 ; i < V; i++){
-            if(inDegree[i] == 0){
+        for(int i =0;i<k;i++){
+            if(indegree[i] == 0){
                 q.add(i);
             }
         }
-
+        int cnt = 0;
+        int[] ans = new int[k];
         while(!q.isEmpty()){
             int u = q.poll();
-            ans[inDegreeIndex++] =u;
-            for(int x : adj.get(u)){
-            if(--inDegree[x] == 0){
-                q.add(x);
-            }
+            ans[cnt++] = u;
+            for(int v : adj.get(u)){
+                if(--indegree[v] == 0){
+                    q.add(v);
+                }
             }
         }
-        
-        return ans;
+        String s = "";
+        for(int i =0;i<k;i++){
+            s += (char) (ans[i] + (int) 'a');
+        }
+        return s;
     }
 }
-
-
