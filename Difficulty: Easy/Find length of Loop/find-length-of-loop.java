@@ -58,6 +58,8 @@ public class LinkedList {
 // } Driver Code Ends
 
 
+
+
 /*
 
 class Node
@@ -89,8 +91,6 @@ class Solution {
                 return cnt;
             }
         }
-        
-        
         return 0;
     }
 }
