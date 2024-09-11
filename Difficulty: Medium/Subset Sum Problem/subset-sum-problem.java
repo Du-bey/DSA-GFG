@@ -36,22 +36,26 @@ class GFG
 class Solution{
 
 
-    static Boolean isSubsetSum(int n, int arr[], int s){
+    static Boolean isSubsetSum(int n, int arr[], int sum){
         // code here
-        boolean[][] dp = new boolean[n][s+1];
-        for(int i = 0;i<n;i++){
-            dp[i][0] = true;
+        int[][] dp = new int[n][sum+1];
+        for(int[] r : dp){
+            Arrays.fill(r, -1);
         }
+        return f(n-1, arr, sum, dp);
+    }
+    
+    static boolean f(int i, int[] arr, int sum, int[][] dp){
+        if(sum == 0) return true;
+        if(i < 0) return false;
         
-        if(arr[0] <= s) dp[0][arr[0]] = true;
-        for(int i =1;i<n;i++){
-            for(int sum = 1;sum<=s;sum++){
-                boolean take = false;
-                boolean notTake = dp[i-1][sum];
-                if(sum >= arr[i]) take = dp[i-1][sum - arr[i]];
-                dp[i][sum] = take || notTake;
-            }
-        }
-        return dp[n-1][s];
+        if(dp[i][sum] != -1) return (dp[i][sum] == 0 ? false : true);
+        
+        boolean notTake = f(i-1, arr, sum, dp);
+        boolean take = false;
+        if(arr[i]<= sum) take = f(i-1, arr, sum - arr[i], dp);
+        boolean ans = take || notTake;
+        dp[i][sum] = ans == true ? 1 : 0;
+        return ans;
     }
 }
