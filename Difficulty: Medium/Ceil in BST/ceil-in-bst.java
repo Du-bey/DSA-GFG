@@ -112,16 +112,12 @@ class Tree {
         // Code here
         int ans = -1;
         while(root != null){
-            if(root.data == key){
-                return key;
-            }
+            if(root.data == key) return key;
             if(root.data > key){
                 ans = root.data;
                 root = root.left;
             }
-            else{
-                root = root.right;
-            }
+            else root = root.right;
         }
         return ans;
     }
