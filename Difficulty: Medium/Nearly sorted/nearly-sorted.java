@@ -12,15 +12,13 @@ class Solution {
     
     public void nearlySorted(int[] arr, int k) {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for(int i =0;i<=k;i++){
-            pq.add(arr[i]);
-        }
         int ind = 0;
         int n = arr.length;
-        for(int i =k+1;i<arr.length;i++){
-            arr[ind++] = pq.poll();
+        for(int i =0;i<n;i++){
             pq.add(arr[i]);
+            if(pq.size() > k) arr[ind++] = pq.poll();
         }
+        
         while(!pq.isEmpty() && ind < n){
             arr[ind++] = pq.poll();
         }
