@@ -1,11 +1,11 @@
 //{ Driver Code Starts
-import java.util.*;
-import java.lang.*;
 import java.io.*;
+import java.lang.*;
+import java.util.*;
+
 class GFG {
     public static void main(String[] args) throws IOException {
-        BufferedReader br =
-            new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine().trim());
         while (T-- > 0) {
             String[] s = br.readLine().trim().split(" ");
@@ -21,7 +21,7 @@ class GFG {
                 adj.get(v).add(u);
             }
             Solution obj = new Solution();
-            boolean ans = obj.isCycle(V, adj);
+            boolean ans = obj.isCycle(adj);
             if (ans)
                 System.out.println("1");
             else
@@ -34,27 +34,25 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int n, ArrayList<ArrayList<Integer>> adj) {
-        // Code here
-        boolean[] vis = new boolean[n];
-        for(int i =0;i<n;i++){
+    public boolean isCycle(ArrayList<ArrayList<Integer>> adj) {
+        int v = adj.size();
+        boolean[] vis = new boolean[v];
+        for(int i =0;i<v;i++){
             if(!vis[i]){
-                if(dfs(adj, vis, i, -1) == true) return true;
+                if(dfs(adj, i, -1, vis)) return true;
             }
         }
         return false;
     }
     
-    public boolean dfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int u, int p){
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj, int u, int p, boolean[] vis){
         vis[u] = true;
         for(int v : adj.get(u)){
             if(vis[v]){
                 if(v != p) return true;
             }
             else{
-                if(dfs(adj, vis, v, u) == true){
-                    return true;
-                }
+                if(dfs(adj, v, u, vis)) return true;
             }
         }
         return false;
