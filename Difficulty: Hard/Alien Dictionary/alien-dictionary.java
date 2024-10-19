@@ -76,52 +76,54 @@ class GFG {
 // } Driver Code Ends
 
 
+
+
 // User function Template for Java
 
 class Solution {
-    public String findOrder(String[] dict, int n, int k) {
-        // Write your code here
+    public String findOrder(String[] words, int n, int k) {
+        
         List<List<Integer>> adj = new ArrayList<>();
         for(int i =0;i<k;i++){
             adj.add(new ArrayList<>());
         }
         int[] indegree = new int[k];
+    
         for(int i =0;i<n-1;i++){
-            String s = dict[i];
-            String t = dict[i+1];
+            String s = words[i];
+            String t = words[i+1];
             int len = Math.min(s.length(), t.length());
-            for(int ind = 0;ind < len;ind++){
-                char cs = s.charAt(ind);
-                char ct = t.charAt(ind);
-                if(cs != ct){
-                    adj.get(cs - 'a').add(ct - 'a');
-                    indegree[ct - 'a']++;
+            
+            for(int ind = 0;ind<len;ind++){
+                char c1 = s.charAt(ind);
+                char c2 = t.charAt(ind);
+                if(c1 != c2){
+                    adj.get(c1 - 'a').add(c2 - 'a');
+                    indegree[c2 - 'a']++;
                     break;
                 }
             }
         }
         
         Queue<Integer> q = new LinkedList<>();
-        for(int i =0;i<k;i++){
-            if(indegree[i] == 0){
-                q.add(i);
-            }
-        }
-        int cnt = 0;
         int[] ans = new int[k];
+        for(int i =0;i<k;i++){
+            if(indegree[i] == 0) q.add(i);
+        }
+        int tp = 0;
         while(!q.isEmpty()){
             int u = q.poll();
-            ans[cnt++] = u;
+            ans[tp++] = u;
             for(int v : adj.get(u)){
                 if(--indegree[v] == 0){
                     q.add(v);
                 }
             }
         }
-        String s = "";
+        String res = "";
         for(int i =0;i<k;i++){
-            s += (char) (ans[i] + (int) 'a');
+            res += (char) (ans[i] + (int) 'a');
         }
-        return s;
+        return res;
     }
 }
