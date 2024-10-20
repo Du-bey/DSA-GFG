@@ -44,6 +44,8 @@ class gfg {
 // } Driver Code Ends
 
 
+
+
 class Solution {
     // Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int W, int wt[], int val[]) {
@@ -57,13 +59,8 @@ class Solution {
     }
     
     public static int f(int ind, int w, int[] wt, int[] val, int[][] dp){
-        if(ind == 0){
-            if(wt[0] <= w){
-                return val[0];
-            }
-            else{
-                return 0;
-            }
+        if(ind < 0){
+            return 0;
         }
         if(dp[ind][w] != -1){
             return dp[ind][w];
