@@ -43,35 +43,32 @@ class gfg {
 }
 // } Driver Code Ends
 
-
-
-
 class Solution {
     // Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int W, int wt[], int val[]) {
         // your code here
         int n = wt.length;
-        int[][] dp = new int[n][W+1];
-        for(int [] row : dp){
-            Arrays.fill(row, -1);
+        int[][] dp = new int[n + 1][W + 1];
+
+        // Fill the DP table
+        for (int ind = 0; ind <= n; ind++) {
+            for (int w = 0; w <= W; w++) {
+                // Base case: If there are no items or weight capacity is 0
+                if (ind == 0 || w == 0) {
+                    dp[ind][w] = 0; // Maximum value is 0
+                } else {
+                    // Not taking the current item
+                    int notTake = dp[ind - 1][w];
+
+                    // Taking the current item (if its weight is less than or equal to current capacity)
+                    int take = (wt[ind - 1] <= w) ? val[ind - 1] + dp[ind - 1][w - wt[ind - 1]] : Integer.MIN_VALUE;
+
+                    // Store the maximum of taking or not taking the item
+                    dp[ind][w] = Math.max(take, notTake);
+                }
+            }
         }
-        return f(n-1, W, wt, val, dp);
+        return dp[n][W];
     }
     
-    public static int f(int ind, int w, int[] wt, int[] val, int[][] dp){
-        if(ind < 0){
-            return 0;
-        }
-        if(dp[ind][w] != -1){
-            return dp[ind][w];
-        }
-        
-        int notTake = f(ind - 1, w, wt, val, dp);
-        int take = -1000000000;
-        if(w >= wt[ind]){
-            take = val[ind] + f(ind -1, w - wt[ind], wt, val, dp);
-        }
-        dp[ind][w] = Math.max(take, notTake);
-        return dp[ind][w];
-    }
 }
