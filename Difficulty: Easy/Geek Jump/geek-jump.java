@@ -20,7 +20,9 @@ class GFG{
             int res=obj.minimumEnergy(arr,N);
             System.out.println(res);
             
-        }
+        
+System.out.println("~");
+}
     }
 }
 
@@ -32,17 +34,16 @@ class GFG{
 
 class Solution{
     public int minimumEnergy(int arr[],int n){
-        //code here
-        int [] dp = new int[n];
-        dp[0] = 0;
-        for(int i = 1;i<n;i++){
-            int fs = Math.abs(arr[i] - arr[i-1]) + dp[i-1];
-            int ss = Integer.MAX_VALUE;
-            if(i>1){
-                ss = Math.abs(arr[i] - arr[i-2]) + dp[i-2];
-            }
-            
-            dp[i] = Math.min(fs, ss);
+        if(n == 1) return 0;
+        int stepone = Math.abs(arr[1] - arr[0]);
+        if(n == 2) return stepone;
+        int[] dp = new int[n];
+        int prev2 = 0;
+        int prev = stepone;
+        for(int i =2;i<n;i++){
+            int one = Math.abs(arr[i] - arr[i-1]) + dp[i-1];
+            int two = Math.abs(arr[i] - arr[i-2]) + dp[i-2];
+            dp[i] = Math.min(one, two);
         }
         return dp[n-1];
     }
