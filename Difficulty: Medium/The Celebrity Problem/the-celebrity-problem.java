@@ -31,32 +31,24 @@ System.out.println("~");
 class Solution {
     // Function to find if there is a celebrity in the party or not.
     public int celebrity(int mat[][]) {
-        // code here
         int n = mat.length;
-        int m = mat[0].length;
+        int top = 0;
+        int down = n-1;
         int ans = -1;
-        boolean found = false;
-        for(int i =0;i<n;i++){
-            found = false;
-            for(int j =0;j<m;j++){
-                if(mat[i][j] == 1){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found) {
-                if(ans != -1) return -1;
-                ans = i;
+        while(top < down){
+            if(mat[top][down] == 1) top++;
+            else if(mat[down][top] == 1) down--;
+            else{
+                top++;
+                down--;
             }
         }
-        if(ans == -1) return ans;
-        found = false;
+        if(top > down) return -1;
         for(int i =0;i<n;i++){
-            if(ans != i && mat[i][ans] == 0){
-                found = true;
-                break;
-            }
+            if(i == top) continue;
+            if(mat[top][i] == 0 && mat[i][top] == 1) continue;
+            else return -1;
         }
-        return found ? -1 : ans;
+        return top;
     }
 }
