@@ -53,13 +53,17 @@ class Solution
         if(st.isEmpty()) return;
         int a = st.pop();
         reverse(st);
-        Stack<Integer> temp = new Stack<>();
-        while(!st.isEmpty()){
-            temp.push(st.pop());
+        
+        insertAtBottom(st, a);
+    }
+    
+    static void insertAtBottom(Stack<Integer> st, int a){
+        if(st.isEmpty()){
+            st.push(a);
+            return;
         }
-        st.push(a);
-        while(!temp.isEmpty()){
-            st.push(temp.pop());
-        }
+        int val = st.pop();
+        insertAtBottom(st, a);
+        st.push(val);
     }
 }
