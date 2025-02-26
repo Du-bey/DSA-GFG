@@ -44,27 +44,27 @@ class GFG {
 class Solution {
     // Function to find the shortest path from a source node to all other nodes
     public int[] shortestPath(ArrayList<ArrayList<Integer>> adj, int src) {
+        // code here
         int n = adj.size();
         int[] dis = new int[n];
-        Arrays.fill(dis, 10000000);
+        Arrays.fill(dis, 100000000);
         dis[src] = 0;
-        Queue<Pair> q= new LinkedList<>();
+        Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(0, src));
+        
         while(!q.isEmpty()){
             Pair p = q.poll();
-            int d = p.d;
             int u = p.u;
+            int d = p.d;
             for(int v : adj.get(u)){
                 if(dis[v] > d + 1){
+                    q.add(new Pair(d+1, v));
                     dis[v] = d + 1;
-                    q.add(new Pair(dis[v], v));
                 }
             }
         }
         for(int i =0;i<n;i++){
-            if(dis[i] == 10000000){
-                dis[i] = -1;
-            }
+            if(dis[i] >= 10000000) dis[i] = -1;
         }
         return dis;
     }
