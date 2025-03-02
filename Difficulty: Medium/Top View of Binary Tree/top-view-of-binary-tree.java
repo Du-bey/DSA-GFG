@@ -16,11 +16,13 @@ class Solution {
         // code here
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, 0));
-        TreeMap<Integer, Integer> h = new TreeMap<>();
+        HashMap<Integer, Integer> h = new HashMap<>();
+        int min = Integer.MAX_VALUE;
         while(!q.isEmpty()){
             Pair p = q.poll();
             Node u = p.first;
             int lev = p.second;
+            min = Math.min(min, lev);
             
             if(!h.containsKey(lev)){
                 h.put(lev, u.data);
@@ -29,8 +31,8 @@ class Solution {
             if(u.right != null) q.add(new Pair(u.right, lev + 1));
         }
         ArrayList<Integer> ans = new ArrayList<>();
-        for(Integer a : h.values()){
-            ans.add(a);
+        for(int i = min;h.containsKey(i);i++){
+            ans.add(h.get(i));
         }
         return ans;
     }
@@ -45,6 +47,7 @@ class Pair{
         this.second = second;
     }
 }
+
 
 //{ Driver Code Starts.
 
